@@ -1,5 +1,6 @@
 package br.com.andlucsil.electriccarapp.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -22,6 +23,7 @@ class CalcularAutonomiaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_calcular_autonomia)
         setupViews()
         setupListeners()
+        setupCachedResult()
     }
 
     private fun setupViews() {
@@ -30,6 +32,11 @@ class CalcularAutonomiaActivity : AppCompatActivity() {
         btnCalcular = findViewById(R.id.btn_calcular)
         tvResultado = findViewById(R.id.tv_resultado)
         ivClose = findViewById(R.id.iv_close)
+    }
+
+    private fun setupCachedResult() {
+        val valorCalculado = getSharedPref()
+        tvResultado.text = valorCalculado.toString()
     }
 
     private fun setupListeners() {
@@ -49,5 +56,19 @@ class CalcularAutonomiaActivity : AppCompatActivity() {
         Log.d("Km Percorrido -> ", km.toString())
         Log.d("Resultado -> ", resultado.toString())
         tvResultado.text = resultado.toString()
+        saveSharedPref(resultado)
+    }
+
+    fun saveSharedPref(resultado: Float) {
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+        with(sharedPref.edit()) {
+            putFloat(getString(R.string.saved_calc), resultado)
+            apply()
+        }
+    }
+
+    fun getSharedPref() : Float {
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return 0.0f
+        return sharedPref.getFloat(getString(R.string.saved_calc), 0.0f)
     }
 }

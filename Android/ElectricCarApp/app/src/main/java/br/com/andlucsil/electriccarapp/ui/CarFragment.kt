@@ -1,5 +1,6 @@
 package br.com.andlucsil.electriccarapp.ui
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -21,15 +22,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import br.com.andlucsil.electriccarapp.R
 import br.com.andlucsil.electriccarapp.data.CarsApi
+import br.com.andlucsil.electriccarapp.data.local.CarRepository
 import br.com.andlucsil.electriccarapp.domain.Carro
 import br.com.andlucsil.electriccarapp.ui.adapter.CarAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.json.JSONArray
-import org.json.JSONTokener
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.HttpURLConnection
-import java.net.URL
 
 class CarFragment : Fragment() {
 
@@ -120,10 +118,19 @@ class CarFragment : Fragment() {
     }
 
     private fun setupList(lista: List<Carro>) {
-        val carroAdapter = CarAdapter(lista)
+        val carroAdapter = CarAdapter(lista, false)
         listaCarros.apply {
             visibility = View.VISIBLE
             adapter = carroAdapter
+        }
+        carroAdapter.carItemListener = {
+            carro ->
+            val isSaved = CarRepository(requireContext()).saveIfNotExist(carro)
+            if (isSaved) {
+                Toast.makeText(context, R.string.saved_database, Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(context, R.string.saved_database_failure, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
