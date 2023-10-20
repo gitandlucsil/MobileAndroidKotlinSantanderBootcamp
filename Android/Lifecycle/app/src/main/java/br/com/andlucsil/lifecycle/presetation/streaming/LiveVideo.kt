@@ -1,4 +1,4 @@
-package br.com.andlucsil.lifecycle.streaming
+package br.com.andlucsil.lifecycle.presetation.streaming
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner

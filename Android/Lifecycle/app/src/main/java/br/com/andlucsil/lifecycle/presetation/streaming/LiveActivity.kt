@@ -1,7 +1,6 @@
-package br.com.andlucsil.lifecycle.streaming
+package br.com.andlucsil.lifecycle.presetation.streaming
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 
 class LiveActivity : AppCompatActivity() {

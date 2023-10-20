@@ -1,4 +1,4 @@
-package br.com.andlucsil.lifecycle
+package br.com.andlucsil.lifecycle.presetation.streaming
 
 import android.app.Activity
 import android.os.Bundle
