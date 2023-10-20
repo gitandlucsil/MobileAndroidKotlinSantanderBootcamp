@@ -1,4 +1,4 @@
-package br.com.andlucsil.lifecycle
+package br.com.andlucsil.lifecycle.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
